@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Text } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import { useInView } from "react-intersection-observer";
 
 import { useSub } from "../nostr";
@@ -53,6 +53,7 @@ function FeedPage({ until, relay }) {
 
 export function Feed({ relay }) {
   const [now] = useState(Math.floor(Date.now() / 1000));
+  const [lastSeen, setLastSeen] = useState(now);
   const [until, setUntil] = useState();
   const { events } = useSub({
     filters: [
@@ -83,12 +84,20 @@ export function Feed({ relay }) {
     }
   }, [until, oldest, inView]);
 
+  const newEvents = events.filter((e) => e.created_at > lastSeen);
+  const feedEvents = events.filter((e) => e.created_at <= lastSeen);
+
   return (
     <>
-      {events.map((ev, idx) => (
+      {newEvents.length > 0 && (
+        <Button onClick={() => setLastSeen(newEvents[0].created_at)}>
+          Show {newEvents.length} more
+        </Button>
+      )}
+      {feedEvents.map((ev, idx) => (
         <>
           <Note key={ev.id} event={ev} relays={[relay]} />
-          {idx === events.length - 1 && !until && <div ref={ref}></div>}
+          {idx === feedEvents.length - 1 && !until && <div ref={ref}></div>}
         </>
       ))}
       {until && <FeedPage until={until} relay={relay} />}

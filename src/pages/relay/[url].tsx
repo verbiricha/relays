@@ -44,16 +44,24 @@ const Relay = ({ url, nrelay }) => {
 
 export async function getServerSideProps(context) {
   const { url } = context.query;
-  const decoded = nip19.decode(url);
-  if (decoded.type === "nrelay") {
-    const relay = decoded.data;
+  try {
+    const decoded = nip19.decode(url);
+    if (decoded.type === "nrelay") {
+      const relay = decoded.data;
+      return {
+        props: {
+          url: relay,
+          nrelay: url,
+        },
+      };
+    }
     return {
-      props: {
-        url: relay,
-        nrelay: url,
+      redirect: {
+        permanent: true,
+        destination: "/",
       },
     };
-  } else {
+  } catch (error) {
     return {
       redirect: {
         permanent: true,

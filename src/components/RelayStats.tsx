@@ -56,7 +56,7 @@ export function RelayStats({ url }) {
           <StatLabel>Gossip</StatLabel>
           <StatNumber>{gossip.events.length}</StatNumber>
           <StatHelpText>
-            <Link href="https://nips.be/65">NIP-65</Link> profiles
+            <Link href="https://nips.be/65">NIP-65</Link> metadata
           </StatHelpText>
         </Stat>
 
