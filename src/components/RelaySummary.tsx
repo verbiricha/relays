@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Box, Heading, Text } from "@chakra-ui/react";
 
 import { useInView } from "react-intersection-observer";
 
