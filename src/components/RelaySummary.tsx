@@ -7,7 +7,7 @@ import { useInView } from "react-intersection-observer";
 import { useRelayMetadata } from "../hooks/useRelayMetadata";
 import { Profile } from "./Profile";
 
-export function RelaySummaryInfo({ url, info }) {
+function RelaySummaryInfo({ url, info }) {
   const { pubkey, supported_nips, software, version, description } = info ?? {};
   return (
     <Flex flexDirection="column">
@@ -38,7 +38,19 @@ export function RelaySummaryInfo({ url, info }) {
   );
 }
 
-export function RelaySummary({ url }) {
+function RelaySummaryFetch({ url }) {
   const info = useRelayMetadata(url);
   return info ? <RelaySummaryInfo info={info} url={url} /> : null;
+}
+
+export function RelaySummary({ url }) {
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+  return (
+    <>
+      <div ref={ref}></div>
+      {inView && <RelaySummaryFetch url={url} />}
+    </>
+  );
 }

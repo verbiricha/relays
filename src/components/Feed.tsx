@@ -69,7 +69,7 @@ export function Feed({ relay }) {
     relays: [relay],
   });
   const oldest = events[events.length - 1];
-  const { ref, inView, entry } = useInView({
+  const { ref, inView } = useInView({
     threshold: 0,
   });
 
