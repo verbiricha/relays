@@ -10,7 +10,7 @@ export function RelayFavicon({ url, children, ...rest }) {
   return (
     <Tooltip label={url}>
       <Avatar
-        size="xs"
+        size="sm"
         src={`${domain}/favicon.ico`}
         icon={<PhoneIcon />}
         {...rest}

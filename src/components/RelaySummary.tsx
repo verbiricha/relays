@@ -25,7 +25,7 @@ function RelaySummaryInfo({ url, info }) {
           <Heading fontSize="xl" mb={2}>
             NIPs
           </Heading>
-          <Flex>
+          <Flex flexWrap="wrap">
             {supported_nips.map((n) => (
               <Box key={n} mr={2} mb={2}>
                 <Link href={`https://nips.be/${n}`}>{n}</Link>
@@ -48,9 +48,8 @@ export function RelaySummary({ url }) {
     threshold: 0,
   });
   return (
-    <>
+    <div key={url} ref={ref}>
       {inView && <RelaySummaryFetch key={url} url={url} />}
-      <div ref={ref}></div>
-    </>
+    </div>
   );
 }
