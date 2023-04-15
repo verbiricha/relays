@@ -52,7 +52,7 @@ function FeedPage({ until, relay }) {
 }
 
 export function Feed({ relay }) {
-  const [now] = useState(Date.now());
+  const [now] = useState(Math.floor(Date.now() / 1000));
   const [until, setUntil] = useState();
   const { events } = useSub({
     filters: [

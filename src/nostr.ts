@@ -2,20 +2,9 @@ import { useState, useEffect } from "react";
 import { RelayPool } from "nostr-relaypool";
 import { utils } from "nostr-tools";
 
-const defaultRelays = [
-  "wss://nostr-pub.wellorder.net",
-  "wss://nostr-relay.nokotaro.com/",
-  "wss://relay.nostr.band/",
-  "wss://relay.damus.io/",
-  "wss://nos.lol/",
-  "wss://offchain.pub/",
-  "wss://relay.nostr.wirednet.jp/",
-  "wss://nostr.wine/",
-];
+const pool = new RelayPool();
 
-const pool = new RelayPool(defaultRelays);
-
-export function useSub({ filters, relays = defaultRelays, options = {} }) {
+export function useSub({ filters, relays, options = {} }) {
   const [events, setEvents] = useState([]);
   const [seenOn, setSeenOn] = useState({});
 
