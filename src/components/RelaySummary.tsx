@@ -40,7 +40,7 @@ function RelaySummaryInfo({ url, info }) {
 
 function RelaySummaryFetch({ url }) {
   const info = useRelayMetadata(url);
-  return info ? <RelaySummaryInfo info={info} url={url} /> : null;
+  return info ? <RelaySummaryInfo key={url} info={info} url={url} /> : null;
 }
 
 export function RelaySummary({ url }) {
@@ -49,8 +49,8 @@ export function RelaySummary({ url }) {
   });
   return (
     <>
+      {inView && <RelaySummaryFetch key={url} url={url} />}
       <div ref={ref}></div>
-      {inView && <RelaySummaryFetch url={url} />}
     </>
   );
 }
