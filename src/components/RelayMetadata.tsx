@@ -17,7 +17,9 @@ export function RelayMetadata({ url }) {
     <>
       <Flex alignItems="center">
         <RelayFavicon url={url} />
-        <Heading ml={4}>{url}</Heading>
+        <Heading fontSize="2xl" ml={4}>
+          {url}
+        </Heading>
       </Flex>
       <RelaySummary url={url} />
       <InputCopy text={url} />
