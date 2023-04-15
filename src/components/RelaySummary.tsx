@@ -64,6 +64,11 @@ function Software({ info }) {
   );
 }
 
+function getCountryName(countryCode) {
+  const displayNames = new Intl.DisplayNames([], { type: "region" });
+  return displayNames.of(countryCode);
+}
+
 function Countries({ info }) {
   const { relay_countries } = info;
   return (
@@ -76,7 +81,7 @@ function Countries({ info }) {
           <Flex flexWrap="wrap">
             {relay_countries.map((n) => (
               <Box key={n} mr={2} mb={2}>
-                {n}
+                {getCountryName(n)}
               </Box>
             ))}
           </Flex>
