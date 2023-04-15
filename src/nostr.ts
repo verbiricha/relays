@@ -51,6 +51,16 @@ export async function getRelayMetadata(url) {
       },
     }).then((res) => res.json());
   } catch (error) {
-    console.error(error);
+    console.error(`Couldn't fetch NIP-11 metadata for ${url}`);
+  }
+}
+
+export async function getRelays() {
+  try {
+    return await fetch("https://api.nostr.watch/v1/online").then((res) =>
+      res.json()
+    );
+  } catch (error) {
+    return [];
   }
 }

@@ -12,26 +12,22 @@ import {
 import { nip19 } from "nostr-tools";
 
 import { RelayFavicon } from "./RelayFavicon";
+import { RelaySummaryInfo } from "./RelaySummary";
 
-const RelaySummary = dynamic(
-  () => import("./RelaySummary").then((m) => m.RelaySummary),
-  { ssr: false }
-);
-
-export function RelayLink({ url }) {
+export function RelayLink({ url, info }) {
   return (
-    <Link key={url} href={`/relay/${nip19.nrelayEncode(url)}`}>
-      <Card>
-        <CardHeader>
+    <Card>
+      <CardHeader>
+        <Link key={url} href={`/relay/${nip19.nrelayEncode(url)}`}>
           <HStack spacing={2}>
             <RelayFavicon url={url} />
-            <Text>{url}</Text>
+            <Text fontSize="lg">{url}</Text>
           </HStack>
-        </CardHeader>
-        <CardBody>
-          <RelaySummary url={url} />
-        </CardBody>
-      </Card>
-    </Link>
+        </Link>
+      </CardHeader>
+      <CardBody>
+        <RelaySummaryInfo info={info} url={url} />
+      </CardBody>
+    </Card>
   );
 }

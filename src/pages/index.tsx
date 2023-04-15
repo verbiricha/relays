@@ -2,6 +2,7 @@ import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import relays from "../relays.json";
 
 import {
   Text,
@@ -29,7 +30,7 @@ const Index = ({ relays }) => {
 
   function randomRelay() {
     const randomIndex = Math.floor(Math.random() * relays.length);
-    goToRelay(relays[randomIndex]);
+    goToRelay(relays[randomIndex].url);
   }
 
   return (
@@ -61,26 +62,15 @@ const Index = ({ relays }) => {
         <Button isDisabled={relays.length === 0} onClick={randomRelay}>
           Random Relay
         </Button>
-        {relays.map((url) => (
-          <RelayLink key={url} url={url} />
+        {relays.map(({ url, info }) => (
+          <RelayLink key={url} info={info} url={url} />
         ))}
       </Layout>
     </>
   );
 };
 
-async function getRelays() {
-  try {
-    return await fetch("https://api.nostr.watch/v1/public").then((res) =>
-      res.json()
-    );
-  } catch (error) {
-    return [];
-  }
-}
-
 export async function getStaticProps(context) {
-  const relays = await getRelays();
   return {
     props: {
       relays,
