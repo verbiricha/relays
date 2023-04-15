@@ -19,6 +19,9 @@ const baseCardStyle = definePartsStyle({
     paddingBottom: 2,
     paddingLeft: 6,
     paddingRight: 6,
+    wordBreak: "break-word",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   body: {
     paddingTop: 2,
