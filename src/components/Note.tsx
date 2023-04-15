@@ -67,9 +67,9 @@ export function Note({ event, relays }) {
   return (
     <Card>
       <CardHeader>
-        <Flex alignItems="center" justifyContent="space-between">
+        <Flex justifyContent="space-between">
           <Profile pubkey={event.pubkey} relays={relays} />
-          <Text color="gray.400">
+          <Text display={["none", "block"]} color="gray.400">
             {formatTimestamp(event.created_at * 1000)}
           </Text>
         </Flex>
