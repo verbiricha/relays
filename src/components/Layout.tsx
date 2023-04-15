@@ -13,7 +13,8 @@ export const Layout = ({ children }) => (
     <DarkModeSwitch />
     <Footer>
       <Text>
-        Made with ❤️ by <Link href=""></Link>
+        Made with ❤️ by{" "}
+        <Link href="https://snort.social/verbiricha">verbiricha</Link>
       </Text>
     </Footer>
   </Container>
