@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Flex, Heading, Text, HStack } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 
 import { useInView } from "react-intersection-observer";
 
@@ -25,13 +25,13 @@ function RelaySummaryInfo({ url, info }) {
           <Heading fontSize="xl" mb={2}>
             NIPs
           </Heading>
-          <HStack spacing={2}>
+          <Flex>
             {supported_nips.map((n) => (
-              <Link key={n} href={`https://nips.be/${n}`}>
-                {n}
-              </Link>
+              <Box key={n} mr={2} mb={2}>
+                <Link href={`https://nips.be/${n}`}>{n}</Link>
+              </Box>
             ))}
-          </HStack>
+          </Flex>
         </Flex>
       )}
     </Flex>

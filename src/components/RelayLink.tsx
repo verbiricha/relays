@@ -1,7 +1,14 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-import { Text, Card, CardHeader, CardBody, HStack } from "@chakra-ui/react";
+import {
+  Text,
+  Card,
+  CardHeader,
+  CardBody,
+  HStack,
+  Box,
+} from "@chakra-ui/react";
 import { nip19 } from "nostr-tools";
 
 import { RelayFavicon } from "./RelayFavicon";
