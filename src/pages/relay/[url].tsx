@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Link from "next/Link";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
