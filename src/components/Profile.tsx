@@ -15,7 +15,7 @@ export function Profile({ pubkey, relays }) {
   });
   return (
     <Link href={`https://snort.social/p/${nprofile}`}>
-      <Flex alignItems="center">
+      <Flex alignItems="center" sx={{ overflow: "hidden" }}>
         {profile?.picture?.length > 0 && (
           <Avatar
             size="sm"
