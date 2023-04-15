@@ -29,7 +29,7 @@ export function Username({ pubkey, relays = [] }) {
   const profile = useProfile(pubkey);
   const nipProfile = useNostrAddress({ address: profile?.nip05 });
   const isAddressValid = profile?.nip05 && pubkey === nipProfile?.pubkey;
-  const name = profile?.display_name || profile?.name || pubkey;
+  const name = profile?.display_name || profile?.name || pubkey.slice(0, 16);
   const nprofile = nip19.nprofileEncode({
     pubkey,
     relays,
