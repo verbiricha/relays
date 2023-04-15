@@ -2,7 +2,6 @@ import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import relays from "../relays.json";
 
 import {
   Text,
@@ -16,6 +15,7 @@ import {
 import { PhoneIcon } from "@chakra-ui/icons";
 import { nip19 } from "nostr-tools";
 
+import { getRelays } from "../nostr";
 import { Layout } from "../components/Layout";
 import { RelayLink } from "../components/RelayLink";
 
@@ -30,7 +30,7 @@ const Index = ({ relays }) => {
 
   function randomRelay() {
     const randomIndex = Math.floor(Math.random() * relays.length);
-    goToRelay(relays[randomIndex].url);
+    goToRelay(relays[randomIndex]);
   }
 
   return (
@@ -62,8 +62,8 @@ const Index = ({ relays }) => {
         <Button isDisabled={relays.length === 0} onClick={randomRelay}>
           Random Relay
         </Button>
-        {relays.map(({ url, info }) => (
-          <RelayLink key={url} info={info} url={url} />
+        {relays.map((url) => (
+          <RelayLink key={url} url={url} />
         ))}
       </Layout>
     </>
@@ -71,10 +71,12 @@ const Index = ({ relays }) => {
 };
 
 export async function getStaticProps(context) {
+  const relays = await getRelays();
   return {
     props: {
       relays,
     },
   };
 }
+
 export default Index;

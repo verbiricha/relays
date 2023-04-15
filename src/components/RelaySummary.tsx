@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
@@ -21,6 +22,37 @@ const Profile = dynamic(() => import("./Profile").then((mod) => mod.Profile), {
 function Description({ info }) {
   const { description } = info;
   return <Flex my={2}>{description && <Text>{description}</Text>}</Flex>;
+}
+
+function PayToRelay({ info }) {
+  const { payments_url, fees } = info;
+  return (
+    <>
+      {payments_url && (
+        <>
+          {fee?.admission && (
+            <Flex flexDirection="column" my={2}>
+              <Heading fontSize="xl" mb={2}>
+                Admission fee
+              </Heading>
+              <Text>
+                {fee.admission.unit === "msat"
+                  ? fee.admission.amount / 1000
+                  : fee.admission.amount}{" "}
+                sats
+              </Text>
+            </Flex>
+          )}
+          <Flex flexDirection="column" my={2}>
+            <Heading fontSize="xl" mb={2}>
+              Pay to Relay
+            </Heading>
+            <Link href={payments_url}>{payments_url}</Link>
+          </Flex>
+        </>
+      )}
+    </>
+  );
 }
 
 function Nips({ info }) {
@@ -91,11 +123,16 @@ function Countries({ info }) {
   );
 }
 
+function isHexString(str) {
+  const hexRegex = /^[a-fA-F0-9]{64}$/;
+  return hexRegex.test(str);
+}
+
 function Operator({ info, relays }) {
   const { pubkey, contact } = info;
   return (
     <>
-      {pubkey && pubkey.length === 64 && (
+      {isHexString(pubkey) && (
         <Flex flexDirection="column" my={2}>
           <Heading fontSize="xl" mb={2}>
             Operator
@@ -178,17 +215,30 @@ export function RelaySummaryInfo({ url, info = {} }) {
 }
 
 function RelaySummaryFetch({ url }) {
-  const info = useRelayMetadata(url);
-  return info ? <RelaySummaryInfo key={url} info={info} url={url} /> : null;
+  const { isError, data } = useRelayMetadata(url);
+  if (isError) {
+    return (
+      <Text>
+        Could not fetch <Link href={`https://nips.be/11`}>NIP-11</Link> metadata
+      </Text>
+    );
+  }
+  return data ? <RelaySummaryInfo key={url} info={data} url={url} /> : null;
 }
 
 export function RelaySummary({ url }) {
+  const [isInView, setIsInView] = useState(false);
   const { ref, inView } = useInView({
     threshold: 0,
   });
-  return (
-    <div key={url} ref={ref}>
-      {inView && <RelaySummaryFetch key={url} url={url} />}
-    </div>
+  useEffect(() => {
+    if (inView) {
+      setIsInView(true);
+    }
+  }, [inView]);
+  return isInView ? (
+    <RelaySummaryFetch key={url} url={url} />
+  ) : (
+    <div ref={ref}></div>
   );
 }

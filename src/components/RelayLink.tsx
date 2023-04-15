@@ -12,7 +12,11 @@ import {
 import { nip19 } from "nostr-tools";
 
 import { RelayFavicon } from "./RelayFavicon";
-import { RelaySummaryInfo } from "./RelaySummary";
+
+const RelaySummary = dynamic(
+  () => import("./RelaySummary").then((mod) => mod.RelaySummary),
+  { ssr: false }
+);
 
 export function RelayLink({ url, info }) {
   return (
@@ -26,7 +30,7 @@ export function RelayLink({ url, info }) {
         </Link>
       </CardHeader>
       <CardBody>
-        <RelaySummaryInfo info={info} url={url} />
+        <RelaySummary url={url} />
       </CardBody>
     </Card>
   );

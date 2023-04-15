@@ -1,6 +1,8 @@
 import Head from "next/head";
+import Link from "next/Link";
 import dynamic from "next/dynamic";
-import { Heading } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 import { nip19 } from "nostr-tools";
 
@@ -12,6 +14,11 @@ const Feed = dynamic(
   { ssr: false }
 );
 
+const RelayStats = dynamic(
+  () => import("../../components/RelayStats").then((mod) => mod.RelayStats),
+  { ssr: false }
+);
+
 const Relay = ({ url, nrelay }) => {
   return (
     <>
@@ -20,7 +27,14 @@ const Relay = ({ url, nrelay }) => {
         <meta name="og:title" content={url} />
       </Head>
       <Layout>
+        <Link href="/">
+          <Flex alignItems="center">
+            <ArrowBackIcon />
+            <Text ml={2}>Back</Text>
+          </Flex>
+        </Link>
         <RelayMetadata url={url} />
+        <RelayStats url={url} />
         <Heading fontSize="2xl">Feed</Heading>
         <Feed relay={url} />
       </Layout>
