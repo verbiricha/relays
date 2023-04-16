@@ -17,7 +17,7 @@ export function Header() {
     >
       <Flex flexDirection="column">
         <Link href="/">
-          <Heading>Nostrrrr</Heading>
+          <Heading>Nostrrr</Heading>
           <Text color="gray.400">A nostr relay explorer</Text>
         </Link>
       </Flex>

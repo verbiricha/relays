@@ -34,7 +34,7 @@ const Index = ({ relays }) => {
   return (
     <>
       <Head>
-        <title>Nostrrrr</title>
+        <title>Nostrrr</title>
         <meta name="og:title" content="A nostr Relay explorer" />
         <meta name="og:description" content="Browse nostr relays" />
       </Head>
