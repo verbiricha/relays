@@ -31,6 +31,11 @@ const baseCardStyle = definePartsStyle({
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
+  footer: {
+    paddingTop: 0,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
 });
 
 const cardSizes = {

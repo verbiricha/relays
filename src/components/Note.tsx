@@ -8,10 +8,12 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
 } from "@chakra-ui/react";
 import { nip19 } from "nostr-tools";
 
 import { Profile } from "./Profile";
+import { NoteReactions } from "./NoteReactions";
 
 function formatTimestamp(timestamp) {
   const date = new Date(timestamp);
@@ -90,6 +92,9 @@ export function Note({ event, relays }) {
           <Text>{event.content}</Text>
         </CardBody>
       </Link>
+      <CardFooter>
+        <NoteReactions event={event} relays={relays} />
+      </CardFooter>
     </Card>
   );
 }
