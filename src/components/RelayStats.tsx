@@ -13,17 +13,6 @@ import {
 import { useSub } from "../nostr";
 
 export function RelayStats({ url }) {
-  const gossip = useSub({
-    filters: [
-      {
-        kinds: [10002],
-      },
-    ],
-    relays: [url],
-    options: {
-      unsubscribeOnEose: true,
-    },
-  });
   const files = useSub({
     filters: [
       {
@@ -53,15 +42,7 @@ export function RelayStats({ url }) {
       </Heading>
       <StatGroup>
         <Stat>
-          <StatLabel>Gossip</StatLabel>
-          <StatNumber>{gossip.events.length}</StatNumber>
-          <StatHelpText>
-            <Link href="https://nips.be/65">NIP-65</Link> metadata
-          </StatHelpText>
-        </Stat>
-
-        <Stat>
-          <StatLabel>Markets</StatLabel>
+          <StatLabel>Shops</StatLabel>
           <StatNumber>
             {markets.events.filter((ev) => ev.kind === 30017).length}
           </StatNumber>

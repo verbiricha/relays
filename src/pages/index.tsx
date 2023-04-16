@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import {
-  Text,
-  Heading,
   Button,
   Input,
   InputGroup,
@@ -36,12 +34,11 @@ const Index = ({ relays }) => {
   return (
     <>
       <Head>
-        <title>Relay Explorer</title>
-        <meta name="og:title" content="Relay Explorer" />
+        <title>Nostrrrr</title>
+        <meta name="og:title" content="A nostr Relay explorer" />
         <meta name="og:description" content="Browse nostr relays" />
       </Head>
       <Layout>
-        <Heading>Relay Explorer</Heading>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"

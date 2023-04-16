@@ -218,7 +218,7 @@ function RelaySummaryFetch({ url }) {
   const { isError, data } = useRelayMetadata(url);
   if (isError) {
     return (
-      <Text>
+      <Text color="gray.400">
         Could not fetch <Link href={`https://nips.be/11`}>NIP-11</Link> metadata
       </Text>
     );

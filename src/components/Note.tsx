@@ -55,15 +55,26 @@ function formatTimestamp(timestamp) {
 }
 
 export function Note({ event, relays }) {
-  const nevent = useMemo(
-    () =>
-      nip19.neventEncode({
+  const isTextNote = event.kind === 1;
+  const reference = useMemo(() => {
+    if (isTextNote) {
+      return nip19.neventEncode({
         id: event.id,
         author: event.pubkey,
         relays,
-      }),
-    [event, relays]
-  );
+      });
+    } else {
+      return nip19.naddrEncode({
+        identifier: event.tags.find((t) => t[0] === "d")?.at(1) ?? "",
+        pubkey: event.pubkey,
+        kind: event.kind,
+        relays,
+      });
+    }
+  }, [event, relays]);
+  const href = isTextNote
+    ? `https://snort.social/e/${reference}`
+    : `https://habla.news/a/${reference}`;
   return (
     <Card>
       <CardHeader>
@@ -74,7 +85,7 @@ export function Note({ event, relays }) {
           </Text>
         </Flex>
       </CardHeader>
-      <Link href={`https://snort.social/e/${nevent}`}>
+      <Link href={href}>
         <CardBody>
           <Text>{event.content}</Text>
         </CardBody>
