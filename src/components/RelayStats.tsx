@@ -38,7 +38,7 @@ export function RelayStats({ url }) {
   const markets = useSub({
     filters: [
       {
-        kinds: [30017],
+        kinds: [30017, 30018],
       },
     ],
     relays: [url],
@@ -62,9 +62,21 @@ export function RelayStats({ url }) {
 
         <Stat>
           <StatLabel>Markets</StatLabel>
-          <StatNumber>{markets.events.length}</StatNumber>
+          <StatNumber>
+            {markets.events.filter((ev) => ev.kind === 30017).length}
+          </StatNumber>
           <StatHelpText>
             <Link href="https://nips.be/15">NIP-15</Link> stalls
+          </StatHelpText>
+        </Stat>
+
+        <Stat>
+          <StatLabel>Products</StatLabel>
+          <StatNumber>
+            {markets.events.filter((ev) => ev.kind === 30018).length}
+          </StatNumber>
+          <StatHelpText>
+            <Link href="https://nips.be/15">NIP-15</Link> products
           </StatHelpText>
         </Stat>
 
