@@ -36,7 +36,7 @@ const Relay = ({ url, nrelay }) => {
         <RelayMetadata url={url} />
         <RelayStats url={url} />
         <Heading fontSize="2xl">Feed</Heading>
-        <Feed relay={url} />
+        <Feed kinds={[1, 30023, 1063]} relay={url} />
       </Layout>
     </>
   );

@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
-import { Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import { useInView } from "react-intersection-observer";
 
 import { useSub } from "../nostr";
 
-import { Note } from "./Note";
-import { LazyFeed } from "./LazyFeed";
+import { Event } from "./Events";
 
 const PAGE = 20;
 
-function FeedPage({ until, relay }) {
+function FeedPage({ kinds, until, relay }) {
   const [next, setNext] = useState();
   const { events } = useSub({
     filters: [
       {
-        kinds: [1, 30023],
+        kinds,
         until,
         limit: PAGE,
       },
@@ -42,27 +41,27 @@ function FeedPage({ until, relay }) {
     <>
       {events.map((ev, idx) => (
         <>
-          <Note key={ev.id} event={ev} relays={[relay]} />
+          <Event key={ev.id} event={ev} relays={[relay]} />
           {idx === events.length - 1 && !next && <div ref={ref}></div>}
         </>
       ))}
-      {next && <FeedPage until={next} relay={relay} />}
+      {next && <FeedPage until={next} relay={relay} kinds={kinds} />}
     </>
   );
 }
 
-export function Feed({ relay }) {
+export function Feed({ kinds, relay }) {
   const [now] = useState(Math.floor(Date.now() / 1000));
   const [lastSeen, setLastSeen] = useState(now);
   const [until, setUntil] = useState();
   const { events } = useSub({
     filters: [
       {
-        kinds: [1, 30023],
+        kinds,
         since: now,
       },
       {
-        kinds: [1, 30023],
+        kinds,
         limit: PAGE,
         until: now,
       },
@@ -89,18 +88,20 @@ export function Feed({ relay }) {
 
   return (
     <>
-      {newEvents.length > 0 && (
-        <Button onClick={() => setLastSeen(newEvents[0].created_at)}>
-          Show {newEvents.length} more
-        </Button>
-      )}
+      <Button
+        isDisabled={newEvents.length === 0}
+        isLoading={newEvents.length === 0}
+        onClick={() => setLastSeen(newEvents[0].created_at)}
+      >
+        {newEvents.length > 0 && `Show ${newEvents.length} more`}
+      </Button>
       {feedEvents.map((ev, idx) => (
-        <>
-          <Note key={ev.id} event={ev} relays={[relay]} />
+        <Box key={ev.id} mb={4}>
+          <Event event={ev} relays={[relay]} />
           {idx === feedEvents.length - 1 && !until && <div ref={ref}></div>}
-        </>
+        </Box>
       ))}
-      {until && <FeedPage until={until} relay={relay} />}
+      {until && <FeedPage until={until} relay={relay} kinds={kinds} />}
     </>
   );
 }
