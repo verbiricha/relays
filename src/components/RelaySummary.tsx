@@ -15,9 +15,8 @@ import { useInView } from "react-intersection-observer";
 
 import { useRelayMetadata } from "../hooks/useRelayMetadata";
 
-const Profile = dynamic(() => import("./Profile").then((mod) => mod.Profile), {
-  ssr: false,
-});
+import { RelayStats } from "./RelayStats";
+import { Profile } from "./Profile";
 
 function Description({ info }) {
   const { description } = info;
@@ -200,6 +199,7 @@ function CommunityPreferences({ info }) {
 }
 
 export function RelaySummaryInfo({ url, info = {} }) {
+  const supportsCount = info.supported_nips?.includes(45);
   return (
     <>
       <Flex flexDirection="column">
@@ -207,6 +207,7 @@ export function RelaySummaryInfo({ url, info = {} }) {
         <Operator info={info} relays={[url]} />
         <Nips info={info} />
         <Software info={info} />
+        {supportsCount && <RelayStats url={url} />}
         <Countries info={info} />
         <CommunityPreferences info={info} />
       </Flex>

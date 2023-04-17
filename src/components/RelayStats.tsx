@@ -1,3 +1,4 @@
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 
 import {
@@ -10,31 +11,27 @@ import {
   StatGroup,
 } from "@chakra-ui/react";
 
-import { useSub } from "../nostr";
+import { relayInit } from "nostr-tools";
 
 export function RelayStats({ url }) {
-  const files = useSub({
-    filters: [
-      {
-        kinds: [1063],
-      },
-    ],
-    relays: [url],
-    options: {
-      unsubscribeOnEose: true,
-    },
-  });
-  const markets = useSub({
-    filters: [
-      {
-        kinds: [30017, 30018],
-      },
-    ],
-    relays: [url],
-    options: {
-      unsubscribeOnEose: true,
-    },
-  });
+  const [stats, setStats] = useState({});
+
+  const relay = useMemo(() => {
+    return relayInit(url);
+  }, [url]);
+
+  useEffect(() => {
+    try {
+      relay.on("connect", () => {
+        relay.count([{ kinds: [1] }]).then(setStats);
+        // todo: run query
+      });
+      relay.connect();
+    } catch (error) {
+      console.error();
+    }
+  }, [url]);
+
   return (
     <>
       <Heading fontSize="xl" mb={2}>
@@ -43,29 +40,9 @@ export function RelayStats({ url }) {
       <StatGroup>
         <Stat>
           <StatLabel>Shops</StatLabel>
-          <StatNumber>
-            {markets.events.filter((ev) => ev.kind === 30017).length}
-          </StatNumber>
+          <StatNumber>0</StatNumber>
           <StatHelpText>
             <Link href="https://nips.be/15">NIP-15</Link> stalls
-          </StatHelpText>
-        </Stat>
-
-        <Stat>
-          <StatLabel>Products</StatLabel>
-          <StatNumber>
-            {markets.events.filter((ev) => ev.kind === 30018).length}
-          </StatNumber>
-          <StatHelpText>
-            <Link href="https://nips.be/15">NIP-15</Link> products
-          </StatHelpText>
-        </Stat>
-
-        <Stat>
-          <StatLabel>Files</StatLabel>
-          <StatNumber>{files.events.length}</StatNumber>
-          <StatHelpText>
-            <Link href="https://nips.be/94">NIP-94</Link> files
           </StatHelpText>
         </Stat>
       </StatGroup>

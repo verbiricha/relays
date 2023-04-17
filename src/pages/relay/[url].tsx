@@ -14,11 +14,6 @@ const Feed = dynamic(
   { ssr: false }
 );
 
-const RelayStats = dynamic(
-  () => import("../../components/RelayStats").then((mod) => mod.RelayStats),
-  { ssr: false }
-);
-
 const Relay = ({ url, nrelay }) => {
   return (
     <>
