@@ -41,14 +41,12 @@ const Relay = ({}) => {
         <meta name="og:title" content={url} />
       </Head>
       <Layout>
-        {url ? (
+        {url && (
           <>
             <RelayMetadata url={url} />
             <Heading fontSize="2xl">Feed</Heading>
             <Feed kinds={[1, 30023]} relay={url} />
           </>
-        ) : (
-          <Text>TODO</Text>
         )}
       </Layout>
     </>
