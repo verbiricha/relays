@@ -3,8 +3,12 @@ import dynamic from "next/dynamic";
 import { Flex, Text, Heading, Code } from "@chakra-ui/react";
 import { nip19 } from "nostr-tools";
 
-import { RelayFavicon } from "./RelayFavicon";
 import { InputCopy } from "./InputCopy";
+
+const RelayFavicon = dynamic(
+  () => import("./RelayFavicon").then((mod) => mod.RelayFavicon),
+  { ssr: false }
+);
 
 const RelaySummary = dynamic(
   () => import("./RelaySummary").then((mod) => mod.RelaySummary),
