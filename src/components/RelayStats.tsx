@@ -62,7 +62,7 @@ export function RelayStats({ url }) {
           <StatLabel>Articles</StatLabel>
           <StatNumber>{articles}</StatNumber>
           <StatHelpText>
-            <Link href="https://nips.be/33">NIP-33</Link>
+            <Link href="https://nips.be/23">NIP-23</Link>
           </StatHelpText>
         </Stat>
 
