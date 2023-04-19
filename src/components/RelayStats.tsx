@@ -37,9 +37,10 @@ export function RelayStats({ url }) {
   useEffect(() => {
     try {
       relay.on("connect", () => {
-        count({ kinds: [1] }, setNotes);
-        count({ kinds: [0] }, setProfiles);
-        count({ kinds: [9735] }, setZaps);
+        // todo: these are currently very expensive (not optimized) and close the sub on me
+        //count({ kinds: [1] }, setNotes);
+        //count({ kinds: [0] }, setProfiles);
+        //count({ kinds: [9735] }, setZaps);
         count({ kinds: [30023] }, setArticles);
         count({ kinds: [1063] }, setFiles);
         count({ kinds: [30017] }, setShops);
@@ -57,28 +58,6 @@ export function RelayStats({ url }) {
         Stats
       </Heading>
       <StatGroup>
-        <Stat>
-          <StatLabel>Notes</StatLabel>
-          <StatNumber>
-            {typeof notes === "undefined" ? "N/A" : notes}
-          </StatNumber>
-        </Stat>
-
-        <Stat>
-          <StatLabel>Profiles</StatLabel>
-          <StatNumber>
-            {typeof profiles === "undefined" ? "N/A" : profiles}
-          </StatNumber>
-        </Stat>
-
-        <Stat>
-          <StatLabel>Zaps</StatLabel>
-          <StatNumber>{typeof zaps === "undefined" ? "N/A" : zaps}</StatNumber>
-          <StatHelpText>
-            <Link href="https://nips.be/57">NIP-57</Link>
-          </StatHelpText>
-        </Stat>
-
         <Stat>
           <StatLabel>Articles</StatLabel>
           <StatNumber>{articles}</StatNumber>
