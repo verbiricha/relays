@@ -44,7 +44,9 @@ export async function getRelayMetadata(url) {
   try {
     const relayUrl = new URL(url);
     const isSecure = url.startsWith("wss://");
-    const relayInfoUrl = `${isSecure ? "https" : "http"}://${relayUrl.host}`;
+    const relayInfoUrl = `${isSecure ? "https" : "http"}://${relayUrl.host}${
+      relayUrl.pathname
+    }`;
     return await fetch(relayInfoUrl, {
       headers: {
         Accept: "application/nostr+json",
