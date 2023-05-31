@@ -72,14 +72,15 @@ export function RelayStats({ url }) {
           <StatLabel>People</StatLabel>
           <StatNumber>{formatShortNumber(profiles)}</StatNumber>
         </Stat>
-        <Stat>
-          <StatLabel>Zaps</StatLabel>
-          <StatNumber>{formatShortNumber(zaps)}</StatNumber>
-        </Stat>
 
         <Stat>
           <StatLabel>Notes</StatLabel>
           <StatNumber>{formatShortNumber(notes)}</StatNumber>
+        </Stat>
+
+        <Stat>
+          <StatLabel>Zaps</StatLabel>
+          <StatNumber>{formatShortNumber(zaps)}</StatNumber>
         </Stat>
 
         <Stat>
