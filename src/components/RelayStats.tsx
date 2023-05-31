@@ -13,6 +13,23 @@ import {
 
 import { relayInit } from "nostr-tools";
 
+function formatShortNumber(n: number) {
+  const intl = new Intl.NumberFormat("en", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+
+  if (n < 2e3) {
+    return n;
+  } else if (n < 1e6) {
+    return `${intl.format(n / 1e3)}K`;
+  } else if (n < 1e9) {
+    return `${intl.format(n / 1e6)}M`;
+  } else {
+    return `${intl.format(n / 1e9)}G`;
+  }
+}
+
 export function RelayStats({ url }) {
   const [notes, setNotes] = useState();
   const [zaps, setZaps] = useState();
@@ -38,13 +55,13 @@ export function RelayStats({ url }) {
     try {
       relay.on("connect", () => {
         // todo: these are currently very expensive (not optimized) and close the sub on me
-        //count({ kinds: [1] }, setNotes);
-        //count({ kinds: [0] }, setProfiles);
-        //count({ kinds: [9735] }, setZaps);
+        count({ kinds: [1] }, setNotes);
+        count({ kinds: [0] }, setProfiles);
+        count({ kinds: [9735] }, setZaps);
         count({ kinds: [30023] }, setArticles);
-        count({ kinds: [1063] }, setFiles);
-        count({ kinds: [30017] }, setShops);
-        count({ kinds: [30018] }, setProducts);
+        //count({ kinds: [1063] }, setFiles);
+        //count({ kinds: [30017] }, setShops);
+        //count({ kinds: [30018] }, setProducts);
       });
       relay.connect();
     } catch (error) {
@@ -59,35 +76,22 @@ export function RelayStats({ url }) {
       </Heading>
       <StatGroup>
         <Stat>
+          <StatLabel>People</StatLabel>
+          <StatNumber>{formatShortNumber(profiles)}</StatNumber>
+        </Stat>
+        <Stat>
+          <StatLabel>Zaps</StatLabel>
+          <StatNumber>{formatShortNumber(zaps)}</StatNumber>
+        </Stat>
+
+        <Stat>
+          <StatLabel>Notes</StatLabel>
+          <StatNumber>{formatShortNumber(notes)}</StatNumber>
+        </Stat>
+
+        <Stat>
           <StatLabel>Articles</StatLabel>
-          <StatNumber>{articles}</StatNumber>
-          <StatHelpText>
-            <Link href="https://nips.be/23">NIP-23</Link>
-          </StatHelpText>
-        </Stat>
-
-        <Stat>
-          <StatLabel>Files</StatLabel>
-          <StatNumber>{files}</StatNumber>
-          <StatHelpText>
-            <Link href="https://nips.be/94">NIP-94</Link>
-          </StatHelpText>
-        </Stat>
-
-        <Stat>
-          <StatLabel>Shops</StatLabel>
-          <StatNumber>{shops}</StatNumber>
-          <StatHelpText>
-            <Link href="https://nips.be/15">NIP-15</Link>
-          </StatHelpText>
-        </Stat>
-
-        <Stat>
-          <StatLabel>Products</StatLabel>
-          <StatNumber>{products}</StatNumber>
-          <StatHelpText>
-            <Link href="https://nips.be/15">NIP-15</Link>
-          </StatHelpText>
+          <StatNumber>{formatShortNumber(articles)}</StatNumber>
         </Stat>
       </StatGroup>
     </>
