@@ -31,13 +31,10 @@ function formatShortNumber(n: number) {
 }
 
 export function RelayStats({ url }) {
-  const [notes, setNotes] = useState();
-  const [zaps, setZaps] = useState();
-  const [profiles, setProfiles] = useState();
+  const [notes, setNotes] = useState(0);
+  const [zaps, setZaps] = useState(0);
+  const [profiles, setProfiles] = useState(0);
   const [articles, setArticles] = useState(0);
-  const [shops, setShops] = useState(0);
-  const [products, setProducts] = useState(0);
-  const [files, setFiles] = useState(0);
 
   const relay = useMemo(() => {
     return relayInit(url);
@@ -54,14 +51,10 @@ export function RelayStats({ url }) {
   useEffect(() => {
     try {
       relay.on("connect", () => {
-        // todo: these are currently very expensive (not optimized) and close the sub on me
         count({ kinds: [1] }, setNotes);
         count({ kinds: [0] }, setProfiles);
         count({ kinds: [9735] }, setZaps);
         count({ kinds: [30023] }, setArticles);
-        //count({ kinds: [1063] }, setFiles);
-        //count({ kinds: [30017] }, setShops);
-        //count({ kinds: [30018] }, setProducts);
       });
       relay.connect();
     } catch (error) {
