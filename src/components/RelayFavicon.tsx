@@ -3,7 +3,6 @@ import { PhoneIcon } from "@chakra-ui/icons";
 
 export function RelayFavicon({ url, children, ...rest }) {
   const domain = url
-    .replace("wss://relay.", "https://")
     .replace("wss://", "https://")
     .replace("ws://", "http://")
     .replace(/\/$/, "");
