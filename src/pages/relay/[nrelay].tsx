@@ -18,19 +18,27 @@ const Feed = dynamic(
 
 const Relay = ({}) => {
   const router = useRouter();
-  const { nrelay } = router.query;
+  const { nrelay: nrelayOrUrl } = router.query;
   const url = useMemo(() => {
-    try {
-      if (nrelay) {
-        const decoded = nip19.decode(nrelay);
+    if (!nrelayOrUrl) return;
+
+    if (typeof nrelayOrUrl === "string") {
+      try {
+        const decoded = nip19.decode(nrelayOrUrl);
         if (decoded.type === "nrelay") {
           return decoded.data;
         }
+      } catch (error) {
+        /***/
       }
-    } catch (error) {
-      console.error("Couldn't decode nrelay");
+
+      let url = decodeURIComponent(nrelayOrUrl);
+      if (!url.startsWith("ws")) url = "wss://" + url;
+      if (url) return url;
     }
-  }, [nrelay]);
+
+    console.error("Couldn't decode relay url", nrelayOrUrl);
+  }, [nrelayOrUrl]);
 
   // todo: error page
 
