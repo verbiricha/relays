@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import {
@@ -11,7 +10,6 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { PhoneIcon } from "@chakra-ui/icons";
-import { nip19 } from "nostr-tools";
 
 import { getRelays } from "../nostr";
 import { Layout } from "../components/Layout";
@@ -22,8 +20,8 @@ const Index = ({ relays }) => {
   const router = useRouter();
   const [relay, setRelay] = useState("");
 
-  function goToRelay(url) {
-    router.push(`/relay/${nip19.nrelayEncode(url)}`);
+  function goToRelay(url: string) {
+    router.push(`/relay/${encodeRelayURL(url)}`);
   }
 
   function randomRelay() {

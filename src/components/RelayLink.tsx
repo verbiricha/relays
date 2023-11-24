@@ -7,11 +7,10 @@ import {
   CardHeader,
   CardBody,
   HStack,
-  Box,
 } from "@chakra-ui/react";
-import { nip19 } from "nostr-tools";
 
 import { RelayFavicon } from "./RelayFavicon";
+import { encodeRelayURL } from "../utils";
 
 const RelaySummary = dynamic(
   () => import("./RelaySummary").then((mod) => mod.RelaySummary),
@@ -22,7 +21,7 @@ export function RelayLink({ url, info }) {
   return (
     <Card>
       <CardHeader>
-        <Link key={url} href={`/relay/${nip19.nrelayEncode(url)}`}>
+        <Link key={url} href={`/relay/${encodeRelayURL(url)}`}>
           <HStack spacing={2}>
             <RelayFavicon url={url} />
             <Text fontSize="lg">{url}</Text>
