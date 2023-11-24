@@ -14,6 +14,7 @@ import { PhoneIcon } from "@chakra-ui/icons";
 import { getRelays } from "../nostr";
 import { Layout } from "../components/Layout";
 import { RelayLink } from "../components/RelayLink";
+import { encodeRelayURL } from "../utils";
 
 const Index = ({ relays }) => {
   // todo: sort relays by similarity to URL
